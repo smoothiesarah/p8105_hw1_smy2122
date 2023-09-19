@@ -12,3 +12,58 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 
 I ran usethis::create_github_token() in the console to get the token to push to GitHub.
+
+## Problem 1
+
+I installed the moderndive package in the console and will now load both the tidyverse and moderndive packages.
+
+```{r}
+library(tidyverse)
+library(moderndive)
+```
+
+I am now loading the early January hourly weather dataset, which shows hourly meteorological data throughout early January 2013 for the 3 airports closest to New York City: LGA, JFK, and EWR. The dataset contains 15 columns and 358 rows. The columns are the variables, which include the weather station ("origin"), year, month, day, and hour of recording, temperature ("temp", measured in degrees Fahrenheit), dew point ("dew", measured in degrees Fahrenheit), relative humidity ("humid"), wind direction ("wind_dir", measured in degrees), wind speed ("wind_speed", measured in miles per hour), wind gust ("wind_gust", measured in miles per hour), precipitation ("precip", measured in inches), sea level pressure ("pressure", measured in millibars), visibility ("visib", measured in miles), and date and hour of recording ("time_hour", stored as a single value in seconds as per the POSIXct format). The mean for the temperature is 39.58 degrees Fahrenheit.
+
+```{r}
+data("early_january_weather")
+nrow(early_january_weather)
+ncol(early_january_weather)
+mean(early_january_weather$temp)
+```
+
+I will now create my scatter plot of temperature by time/hour, with darker points indicating lower humidity and bluer points indicating higher humidity. On average, temperature increases and humidity decreases from January 1 to around January 16. However, this trend is not fully linear and contains frequent drops in temperature immediately followed by rises in temperature.
+
+```{r}
+ggplot(data = early_january_weather, aes (x = time_hour, y = temp, color = humid)) + geom_point()
+ggsave
+```
+
+# Problem 2
+
+The code chunk below creates a data frame comprised of a random sample of size 10, a logical vector, a character vector, and a factor vector.
+
+```{r}
+sample_df = tibble(
+  random_samp = rnorm(10),
+  logical_vec = random_samp > 0,
+  character_vec = character(10),
+  factor_vec = factor(10, 3)
+)
+```
+
+As seen below, the mean could only be calculated for the random sample (mean = -0.204) and logical vector (mean = 0.5) variables in the data frame. However, the character vector and factor vector variables are not numeric or logical and thus return NA.
+
+```{r}
+mean(sample_df$random_samp)
+mean(sample_df$logical_vec)
+mean(sample_df$character_vec)
+mean(sample_df$factor_vec)
+```
+
+The code chunk below converts logical, character, and factor variables from the data frame into numeric vectors. Similar to taking the mean, the logical vector returns numbers of 0 or 1 whereas the character and factor vectors return NA, which may explain the results for calculating the mean of each variable.
+
+```{r, echo = FALSE}
+as.numeric(sample_df$logical_vec)
+as.numeric(sample_df$character_vec)
+as.numeric(sample_df$factor_vec)
+```
