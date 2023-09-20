@@ -17,7 +17,7 @@ I ran usethis::create_github_token() in the console to get the token to push to 
 
 I installed the moderndive package in the console and will now load both the tidyverse and moderndive packages.
 
-```{r}
+```{r echo = TRUE}
 library(tidyverse)
 library(moderndive)
 ```
