@@ -23,7 +23,9 @@ library(moderndive)
 data("early_january_weather")
 ```
 
-The early January hourly weather dataset shows hourly meteorological data throughout early January 2013 for the 3 airports closest to New York City: LGA, JFK, and EWR. The dataset contains `r ncol(early_january_weather)` columns and `r `nrow(early_january_weather)` rows. The columns are the variables, which include the weather station, year, month, day, and hour of recording, temperature ("temp", measured in degrees Fahrenheit), relative humidity ("humid"), wind direction, wind speed, wind gust, precipitation, and date and hour of recording ("time_hour", stored as a single value in seconds as per the POSIXct format). The mean for the temperature is `r mean(pull(early_january_weather, temp))` degrees Fahrenheit.
+The early January hourly weather dataset shows hourly meteorological data throughout early January 2013 for the 3 airports closest to New York City: LGA, JFK, and EWR. The dataset contains `r ncol(early_january_weather)` columns and `r nrow(early_january_weather)` rows. The columns are the variables, which include the weather station, year, month, day, and hour of recording, temperature ("temp", measured in degrees Fahrenheit and will be used in the upcoming scatter plot), relative humidity ("humid", which will be used in the upcoming scatter plot), wind direction, wind speed, wind gust, precipitation, and date and hour of recording ("time_hour", stored as a single value in seconds as per the POSIXct format and will be used in the upcoming scatter plot).
+
+The mean for the temperature is `r mean(pull(early_january_weather, temp))` degrees Fahrenheit and the mean for humidity is `r mean(pull(early_january_weather, humid))`.
 
 The code chunk below shows the creation of the scatter plot of temperature by time/hour. Darker points indicate lower humidity and bluer points indicate higher humidity.
 
@@ -31,7 +33,7 @@ The code chunk below shows the creation of the scatter plot of temperature by ti
 ggplot(data = early_january_weather, aes (x = time_hour, y = temp, color = humid)) + geom_point()
 ```
 
-```{r save, include=FALSE}
+```{r save scatter plot, results = 'hide'}
 ggsave
 ```
 
@@ -53,7 +55,7 @@ homework_df =
 
 The code chunk below calculates the mean for the random sample, logical vector, character vector, and factor vector.
 
-```{r}
+```{r means, results = "hide", warning = FALSE}
 mean(pull(homework_df, samp))
 mean(pull(homework_df, logical_vec))
 mean(pull(homework_df, character_vec))
